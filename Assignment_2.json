@@ -1,0 +1,355 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "type": "inputNode",
+      "content": {
+        "schema": ""
+      },
+      "id": "78307983-084c-40fb-8bde-8f5dc2f414fd",
+      "name": "request",
+      "position": {
+        "x": 955,
+        "y": 425
+      }
+    },
+    {
+      "type": "decisionTableNode",
+      "content": {
+        "hitPolicy": "first",
+        "rules": [
+          {
+            "_id": "07a48dd5-5d1d-45c7-bd02-71d4e6f6f3a8",
+            "b9f2aafb-bd4d-42ba-be73-36313d6abc3f": "true",
+            "c31ec1d2-40d6-46d5-9f5f-38dcfba59ced": ">= 50",
+            "5a039d5c-0b73-41b2-a467-58a9af6cda6a": "\"Allow\"",
+            "6049a0ab-9120-42d3-b9c7-a65abcc7c3c3": "\"Prerequisite Completed\""
+          },
+          {
+            "_id": "551b8ba3-3006-428d-9b03-7b8ec50d735f",
+            "b9f2aafb-bd4d-42ba-be73-36313d6abc3f": "true",
+            "c31ec1d2-40d6-46d5-9f5f-38dcfba59ced": "< 50",
+            "5a039d5c-0b73-41b2-a467-58a9af6cda6a": "\"Deny\"",
+            "6049a0ab-9120-42d3-b9c7-a65abcc7c3c3": "\"Prequisite Not Completed\""
+          },
+          {
+            "_id": "dc2aba77-db81-4b0a-ad45-a8d4077b5520",
+            "b9f2aafb-bd4d-42ba-be73-36313d6abc3f": "false",
+            "c31ec1d2-40d6-46d5-9f5f-38dcfba59ced": "",
+            "5a039d5c-0b73-41b2-a467-58a9af6cda6a": "\"Deny\"",
+            "6049a0ab-9120-42d3-b9c7-a65abcc7c3c3": "\"Prequisite Not Completed\""
+          }
+        ],
+        "inputs": [
+          {
+            "id": "b9f2aafb-bd4d-42ba-be73-36313d6abc3f",
+            "name": "Prequisite",
+            "field": "student.hasCompleted"
+          },
+          {
+            "id": "c31ec1d2-40d6-46d5-9f5f-38dcfba59ced",
+            "name": "Grade",
+            "field": "unit.grade"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "5a039d5c-0b73-41b2-a467-58a9af6cda6a",
+            "name": "Output",
+            "field": "student.prerequisiteOutcome"
+          },
+          {
+            "id": "6049a0ab-9120-42d3-b9c7-a65abcc7c3c3",
+            "name": "Output",
+            "field": "unit.message"
+          }
+        ],
+        "passThrough": "true",
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single",
+        "passThorough": false
+      },
+      "id": "8739f026-439d-4ce6-9739-6dbd528f2d1a",
+      "name": "prerequisite",
+      "position": {
+        "x": 1255,
+        "y": 450
+      }
+    },
+    {
+      "type": "decisionTableNode",
+      "content": {
+        "hitPolicy": "first",
+        "rules": [
+          {
+            "_id": "405ac501-91e9-4989-a803-d05b07f04750",
+            "2d87dd43-5e3d-4ca5-bf43-691f9af0971c": "== \"Allow\"",
+            "e3857cb8-0e31-4507-9573-d02ff1986fac": "<= unit.maximumCapacity",
+            "dfbb0deb-a36f-4cfe-9bfc-b3449472b968": "",
+            "9a091147-87e1-4273-862e-26d676198a56": "true",
+            "56aa7b85-181f-4aeb-992d-cf068256f2b5": "\"Capacity Check Successfull\""
+          },
+          {
+            "_id": "5f374426-2b60-4201-8812-fcea67cc5132",
+            "2d87dd43-5e3d-4ca5-bf43-691f9af0971c": "== \"Allow\"",
+            "e3857cb8-0e31-4507-9573-d02ff1986fac": "> unit.maximumCapacity",
+            "dfbb0deb-a36f-4cfe-9bfc-b3449472b968": "",
+            "9a091147-87e1-4273-862e-26d676198a56": "false",
+            "56aa7b85-181f-4aeb-992d-cf068256f2b5": "\"Class is full\""
+          },
+          {
+            "_id": "ce038217-5c1c-488a-81e3-5417ec54062e",
+            "2d87dd43-5e3d-4ca5-bf43-691f9af0971c": "== \"Deny\"",
+            "e3857cb8-0e31-4507-9573-d02ff1986fac": "",
+            "dfbb0deb-a36f-4cfe-9bfc-b3449472b968": "",
+            "9a091147-87e1-4273-862e-26d676198a56": "unit.message",
+            "56aa7b85-181f-4aeb-992d-cf068256f2b5": ""
+          }
+        ],
+        "inputs": [
+          {
+            "id": "2d87dd43-5e3d-4ca5-bf43-691f9af0971c",
+            "name": "Prerequisite",
+            "field": "student.prerequisiteOutcome"
+          },
+          {
+            "id": "e3857cb8-0e31-4507-9573-d02ff1986fac",
+            "name": "Current Enrollment",
+            "field": "unit.currentEnrollment"
+          },
+          {
+            "id": "dfbb0deb-a36f-4cfe-9bfc-b3449472b968",
+            "name": "Maximum Capacity",
+            "field": "unit.maximumCapacity"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "9a091147-87e1-4273-862e-26d676198a56",
+            "name": "Output",
+            "field": "unit.checkCapacity"
+          },
+          {
+            "id": "56aa7b85-181f-4aeb-992d-cf068256f2b5",
+            "name": "Output",
+            "field": "unit.checkCapacityMessage"
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single",
+        "passThorough": false
+      },
+      "id": "0db6b71a-0be7-469c-ad5d-8206916aeeef",
+      "name": "capacity check",
+      "position": {
+        "x": 1815,
+        "y": 450
+      }
+    },
+    {
+      "type": "functionNode",
+      "content": {
+        "source": "import zen from 'zen';\n\n/** @type {Handler} */\nexport const handler = async (input) => {\n  console.log(input.student.hasCompleted)\n  let student = input.student\n  let level = \"Fail\", prerequisiteOutcome = \"Allow\";\n  if(input.student.hasCompleted){\n    const grade = input.unit.grade;\n    \n    if (grade >= 50 && grade < 60) {\n      level = \"Credit\";\n    } else if (grade >= 60 && grade < 75) {\n      level = \"Distinction\";\n    } else if (grade >= 75) {\n      level = \"High Distinction\";\n    } else {\n      input.student.prerequisiteOutcome = \"Deny\"\n    }\n  }\n  \n\n\n  return {\n  ...input,\n  student: {\n    ...input.student,\n    gradeLevel: level,\n    prerequisiteOutcome: prerequisiteOutcome  // 👈 Must be set like this\n  }\n};\n\n};"
+      },
+      "id": "67c6c4ac-51bf-4282-9f65-52d0f147ce22",
+      "name": "grade",
+      "position": {
+        "x": 1530,
+        "y": 570
+      }
+    },
+    {
+      "type": "functionNode",
+      "content": {
+        "source": "import zen from 'zen';\n\n/** @type {Handler} */\nexport const handler = async (input) => {\n  const unitSchedule = input.unit.schedule;\n  const enrolledUnits = input.student.enrolledUnits || [];\n\n  const hasConflict = enrolledUnits.some(enrolled => {\n    const enrolledSchedule = enrolled.schedule;\n\n    // Check for overlapping days\n    const dayOverlap = unitSchedule.days.some(day => enrolledSchedule.days.includes(day));\n\n    // Check for overlapping times if days overlap\n    if (dayOverlap) {\n      const [startA, endA] = unitSchedule.time.split('-').map(t => parseInt(t.replace(':', '')));\n      const [startB, endB] = enrolledSchedule.time.split('-').map(t => parseInt(t.replace(':', '')));\n      \n      // Time overlap logic: A starts before B ends AND A ends after B starts\n      return startA < endB && endA > startB;\n    }\n\n    return false;\n  });\n\n  return {\n    ...input,\n    scheduleCheck: {\n      allowed: !hasConflict,\n      message: hasConflict ? \"Schedule conflict detected\" : \"No conflict\"\n    }\n  };\n};\n"
+      },
+      "id": "35d0ea21-0de3-4838-94f1-55aa152dabda",
+      "name": "scheduleConflictCheck",
+      "position": {
+        "x": 2140,
+        "y": 435
+      }
+    },
+    {
+      "type": "functionNode",
+      "content": {
+        "source": "import zen from 'zen';\n\n/** @type {Handler} */\nexport const handler = async (input) => {\n  const current = input.student.currentCredits;\n  const newUnit = input.unit.creditPoints;\n  const max = input.student.maxAllowedCredits;\n\n  const totalAfterEnrollment = current + newUnit;\n  const allowed = totalAfterEnrollment <= max;\n\n  return {\n    ...input,\n    creditLimitCheck: {\n      allowed: allowed,\n      message: allowed ? \"Enrollment within credit limit\" : \"Credit limit exceeded\"\n    }\n  };\n};\n"
+      },
+      "id": "cdde0421-d3e7-4a78-b2c3-62a9ebe16b97",
+      "name": "creditLimitCheck",
+      "position": {
+        "x": 2420,
+        "y": 440
+      }
+    },
+    {
+      "type": "decisionTableNode",
+      "content": {
+        "hitPolicy": "first",
+        "rules": [
+          {
+            "_id": "6893bad1-7f5e-44f9-8b27-d9d477bbd3e0",
+            "7f735809-cfc9-4193-99ee-fc99279ce1c4": "\"Probation\"",
+            "52f5f937-be58-45bf-ac1f-e6a79e4ab4f9": "true",
+            "2841ff4f-00e2-4c73-b8b1-63a819dcdc44": "\"Approved\""
+          },
+          {
+            "_id": "898fbb63-2b06-40f1-9738-22848981b894",
+            "7f735809-cfc9-4193-99ee-fc99279ce1c4": "=\"Probation\"",
+            "52f5f937-be58-45bf-ac1f-e6a79e4ab4f9": "false",
+            "2841ff4f-00e2-4c73-b8b1-63a819dcdc44": "\"Advisor Approval Required\""
+          },
+          {
+            "_id": "0e0cf7fe-54a9-4594-9564-a20eb6d45ef7",
+            "7f735809-cfc9-4193-99ee-fc99279ce1c4": "!= \"Probation\"",
+            "52f5f937-be58-45bf-ac1f-e6a79e4ab4f9": "",
+            "2841ff4f-00e2-4c73-b8b1-63a819dcdc44": "\"Approved\""
+          }
+        ],
+        "inputs": [
+          {
+            "id": "7f735809-cfc9-4193-99ee-fc99279ce1c4",
+            "name": "Academic Standing",
+            "field": "student.isacademicStanding"
+          },
+          {
+            "id": "52f5f937-be58-45bf-ac1f-e6a79e4ab4f9",
+            "name": "Is RequiredCore",
+            "field": "unit.isRequiredCore"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "2841ff4f-00e2-4c73-b8b1-63a819dcdc44",
+            "name": "Enrollment Status",
+            "field": "student.enrollmentStatus"
+          }
+        ],
+        "passThrough": true,
+        "inputField": null,
+        "outputPath": null,
+        "executionMode": "single",
+        "passThorough": false
+      },
+      "id": "d96083c0-32cb-4d62-8514-5eaeb4b20e59",
+      "name": "academicCheck",
+      "position": {
+        "x": 2755,
+        "y": 455
+      }
+    },
+    {
+      "type": "functionNode",
+      "content": {
+        "source": "/** @type {Handler} */\nexport const handler = async (input) => {\n  // Simpler approach using native Date objects\n  const today = new Date();\n  const deadline = new Date(input.unit.enrollmentDeadline);\n  \n  const isLate = today > deadline;\n  \n  return {\n    ...input,\n    lateEnrollmentCheck: {\n      isLate,\n      requiresApproval: isLate,\n      applyLateFee: isLate,\n      message: isLate \n        ? \"Late enrollment - Department Head approval required and fee applied\"\n        : \"Enrollment within deadline\"\n    }\n  };\n};"
+      },
+      "id": "e37b48f5-8e64-4e3e-89de-fa606ef2590b",
+      "name": "lateEnrollmentCheck",
+      "position": {
+        "x": 3070,
+        "y": 435
+      }
+    },
+    {
+      "type": "functionNode",
+      "content": {
+        "source": "/** @type {Handler} */\nexport const handler = async (input) => {\n  const { student, unit, currentTerm } = input;\n\n  const isHighDemandWithLowSpots =\n    unit.availableSpots <= 10 && unit.isHighDemand;\n\n  let result = {\n    grantPriority: false,\n    placeOnWaitingList: false,\n    message: \"Standard enrollment processing\"\n  };\n\n  if (isHighDemandWithLowSpots) {\n    const expectedGraduationNextTerm =\n      student.expectedGraduationTerm === `${parseInt(currentTerm) + 1}`;\n    const needsThisUnit = student.requiresUnitForGraduation === true;\n\n    if (expectedGraduationNextTerm && needsThisUnit) {\n      result = {\n        grantPriority: true,\n        placeOnWaitingList: false,\n        message: \"Priority enrollment granted\"\n      };\n    } else {\n      result = {\n        grantPriority: false,\n        placeOnWaitingList: true,\n        message: \"Placed on waiting list due to high demand\"\n      };\n    }\n  }\n\n  return {\n    ...input,\n    priorityEnrollmentCheck: result\n  };\n};\n"
+      },
+      "id": "49dbaaad-630a-47ee-80d5-4c948c7df456",
+      "name": "priorityEnrollmentCheck",
+      "position": {
+        "x": 3430,
+        "y": 425
+      }
+    },
+    {
+      "type": "functionNode",
+      "content": {
+        "source": "/** @type {Handler} */\nexport const handler = async (input) => {\n  const {\n    student,\n    unit,\n    scheduleConflictCheck,\n    creditLimitCheck,\n    lateEnrollmentCheck,\n    priorityEnrollmentCheck\n  } = input;\n\n  const prerequisitesMet = student.prerequisiteOutcome === \"Continue\";\n  const classNotFull = unit.checkCapacity === true;\n  const noScheduleConflict = scheduleConflictCheck?.scheduleCheck?.allowed === true;\n  const withinCreditLimit = creditLimitCheck.creditLimitCheck?.allowed === true;\n  const goodStanding = student.academicStanding !== \"Probation\" || unit.isRequiredCore;\n  const beforeDeadline = !lateEnrollmentCheck.lateEnrollmentCheck?.isLate;\n\n  const requiresDepartmentHeadApproval = lateEnrollmentCheck.lateEnrollmentCheck?.requiresApproval;\n  const applyLateFee = lateEnrollmentCheck.lateEnrollmentCheck?.applyLateFee;\n  const onWaitlist = priorityEnrollmentCheck.priorityEnrollmentCheck?.placeOnWaitingList;\n  const hasPriority = priorityEnrollmentCheck.priorityEnrollmentCheck?.grantPriority;\n\n  let enrollmentStatus = \"Rejected\";\n  let summary = \"Enrollment rejected due to one or more failed checks.\";\n\n  // Apply decision table logic for approval\n  if (\n    prerequisitesMet &&\n    classNotFull &&\n    noScheduleConflict &&\n    withinCreditLimit &&\n    goodStanding &&\n    beforeDeadline\n  ) {\n    enrollmentStatus = \"Approved\";\n    summary = \"Enrollment approved with all conditions satisfied.\";\n  } else if (\n    prerequisitesMet &&\n    withinCreditLimit\n  ) {\n    enrollmentStatus = \"Review\";\n    summary = \"Enrollment under review due to conditions like late enrollment, full class, or schedule conflict.\";\n  }\n\n  // Override if waitlisted\n  if (onWaitlist) {\n    enrollmentStatus = \"Waiting List\";\n    summary = \"Student has been placed on the waiting list due to high demand and low availability.\";\n  }\n\n  return {\n    ...input,\n    finalDecision: {\n      enrollmentStatus,\n      summary,\n      requiresDepartmentHeadApproval,\n      applyLateFee,\n      hasPriority,\n      onWaitlist\n    }\n  };\n};\n"
+      },
+      "id": "89ac9e49-15da-4c42-b2cc-d0ab469e0b6f",
+      "name": "finalDecisionAggregator",
+      "position": {
+        "x": 3805,
+        "y": 425
+      }
+    },
+    {
+      "type": "outputNode",
+      "content": {
+        "schema": "{\n  \"status\": finalDecision.enrollmentStatus,\n  \"summary\": finalDecision.summary\n}"
+      },
+      "id": "73db829b-2564-4c81-8429-6cc7cd11df17",
+      "name": "response",
+      "position": {
+        "x": 4095,
+        "y": 415
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "8d7fe647-4380-4561-b4dc-27d1faf45140",
+      "sourceId": "78307983-084c-40fb-8bde-8f5dc2f414fd",
+      "type": "edge",
+      "targetId": "8739f026-439d-4ce6-9739-6dbd528f2d1a"
+    },
+    {
+      "id": "0b00f1c3-b679-4df1-98b9-272405776497",
+      "sourceId": "8739f026-439d-4ce6-9739-6dbd528f2d1a",
+      "type": "edge",
+      "targetId": "67c6c4ac-51bf-4282-9f65-52d0f147ce22"
+    },
+    {
+      "id": "6f9e3f4e-27c9-45e2-8c88-ff5116f2df6e",
+      "sourceId": "67c6c4ac-51bf-4282-9f65-52d0f147ce22",
+      "type": "edge",
+      "targetId": "0db6b71a-0be7-469c-ad5d-8206916aeeef"
+    },
+    {
+      "id": "c025f7f7-ce89-42f3-93a9-b205f8348b65",
+      "sourceId": "0db6b71a-0be7-469c-ad5d-8206916aeeef",
+      "type": "edge",
+      "targetId": "35d0ea21-0de3-4838-94f1-55aa152dabda"
+    },
+    {
+      "id": "f9a8426c-2ad2-4f57-88a4-06d02d235764",
+      "sourceId": "35d0ea21-0de3-4838-94f1-55aa152dabda",
+      "type": "edge",
+      "targetId": "cdde0421-d3e7-4a78-b2c3-62a9ebe16b97"
+    },
+    {
+      "id": "ada81283-1006-4589-a478-00152e7c7502",
+      "sourceId": "cdde0421-d3e7-4a78-b2c3-62a9ebe16b97",
+      "type": "edge",
+      "targetId": "d96083c0-32cb-4d62-8514-5eaeb4b20e59"
+    },
+    {
+      "id": "d583afbd-b141-4d5d-b868-bdbb1a1c6191",
+      "sourceId": "d96083c0-32cb-4d62-8514-5eaeb4b20e59",
+      "type": "edge",
+      "targetId": "e37b48f5-8e64-4e3e-89de-fa606ef2590b"
+    },
+    {
+      "id": "e46c3db6-1d6a-4a38-ac84-f74896ca8444",
+      "sourceId": "e37b48f5-8e64-4e3e-89de-fa606ef2590b",
+      "type": "edge",
+      "targetId": "49dbaaad-630a-47ee-80d5-4c948c7df456"
+    },
+    {
+      "id": "d6d26921-81c8-45f7-b59c-b05c41ec1cca",
+      "sourceId": "49dbaaad-630a-47ee-80d5-4c948c7df456",
+      "type": "edge",
+      "targetId": "89ac9e49-15da-4c42-b2cc-d0ab469e0b6f"
+    },
+    {
+      "id": "c09977d0-7a46-4659-a927-e752fd6ad331",
+      "sourceId": "89ac9e49-15da-4c42-b2cc-d0ab469e0b6f",
+      "type": "edge",
+      "targetId": "73db829b-2564-4c81-8429-6cc7cd11df17"
+    }
+  ]
+}
