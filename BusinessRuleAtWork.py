@@ -6,7 +6,6 @@ engine = zen.ZenEngine()
 
 decision = engine.create_decision(content)
 result = decision.evaluate({
-  {
   "currentTerm": "2025-1",
   "student": {
     "id": 48195472,
@@ -39,8 +38,6 @@ result = decision.evaluate({
     "isHighDemand": "true",
     "enrollmentDeadline": "2025-02-28"
   }
-}
-}
-)
+})
 print(result)
 print("Hello World")
