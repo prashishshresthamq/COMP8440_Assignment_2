@@ -9,8 +9,8 @@
       "id": "78307983-084c-40fb-8bde-8f5dc2f414fd",
       "name": "request",
       "position": {
-        "x": 955,
-        "y": 425
+        "x": 760,
+        "y": 875
       }
     },
     {
@@ -64,7 +64,7 @@
             "field": "unit.message"
           }
         ],
-        "passThrough": "true",
+        "passThrough": true,
         "inputField": null,
         "outputPath": null,
         "executionMode": "single",
@@ -164,7 +164,7 @@
     {
       "type": "functionNode",
       "content": {
-        "source": "import zen from 'zen';\n\n/** @type {Handler} */\nexport const handler = async (input) => {\n  const unitSchedule = input.unit.schedule;\n  const enrolledUnits = input.student.enrolledUnits || [];\n\n  const hasConflict = enrolledUnits.some(enrolled => {\n    const enrolledSchedule = enrolled.schedule;\n\n    // Check for overlapping days\n    const dayOverlap = unitSchedule.days.some(day => enrolledSchedule.days.includes(day));\n\n    // Check for overlapping times if days overlap\n    if (dayOverlap) {\n      const [startA, endA] = unitSchedule.time.split('-').map(t => parseInt(t.replace(':', '')));\n      const [startB, endB] = enrolledSchedule.time.split('-').map(t => parseInt(t.replace(':', '')));\n      \n      // Time overlap logic: A starts before B ends AND A ends after B starts\n      return startA < endB && endA > startB;\n    }\n\n    return false;\n  });\n\n  return {\n    ...input,\n    scheduleCheck: {\n      allowed: !hasConflict,\n      message: hasConflict ? \"Schedule conflict detected\" : \"No conflict\"\n    }\n  };\n};\n"
+        "source": "import zen from 'zen';\n\n/** @type {Handler} */\nexport const handler = async (input) => {\n  const unitSchedule = input.unit.schedule;\n  const enrolledUnits = input.student.enrolledUnits || [];\n\n  const hasConflict = enrolledUnits.some(enrolled => {\n    const enrolledSchedule = enrolled.schedule;\n\n    // Check for overlapping days\n    const dayOverlap = unitSchedule.days.some(day => enrolledSchedule.days.includes(day));\n\n    // Check for overlapping times if days overlap\n    if (dayOverlap) {\n      const [startA, endA] = unitSchedule.time.split('-').map(t => parseInt(t.replace(':', '')));\n      const [startB, endB] = enrolledSchedule.time.split('-').map(t => parseInt(t.replace(':', '')));\n      \n      // Time overlap logic: A starts before B ends AND A ends after B starts\n      return startA < endB && endA > startB;\n    }\n\n\n    return false;\n  });\n  return {\n    \n    ...input,\n    scheduleCheck: {\n      allowed: !hasConflict,\n      message: hasConflict ? \"Schedule conflict detected\" : \"No conflict\"\n    }\n  };\n};\n"
       },
       "id": "35d0ea21-0de3-4838-94f1-55aa152dabda",
       "name": "scheduleConflictCheck",
@@ -181,8 +181,8 @@
       "id": "cdde0421-d3e7-4a78-b2c3-62a9ebe16b97",
       "name": "creditLimitCheck",
       "position": {
-        "x": 2420,
-        "y": 440
+        "x": 1250,
+        "y": 710
       }
     },
     {
@@ -237,8 +237,8 @@
       "id": "d96083c0-32cb-4d62-8514-5eaeb4b20e59",
       "name": "academicCheck",
       "position": {
-        "x": 2755,
-        "y": 455
+        "x": 1260,
+        "y": 890
       }
     },
     {
@@ -249,8 +249,8 @@
       "id": "e37b48f5-8e64-4e3e-89de-fa606ef2590b",
       "name": "lateEnrollmentCheck",
       "position": {
-        "x": 3070,
-        "y": 435
+        "x": 1255,
+        "y": 1045
       }
     },
     {
@@ -261,8 +261,8 @@
       "id": "49dbaaad-630a-47ee-80d5-4c948c7df456",
       "name": "priorityEnrollmentCheck",
       "position": {
-        "x": 3430,
-        "y": 425
+        "x": 1250,
+        "y": 1230
       }
     },
     {
@@ -273,20 +273,20 @@
       "id": "89ac9e49-15da-4c42-b2cc-d0ab469e0b6f",
       "name": "finalDecisionAggregator",
       "position": {
-        "x": 3805,
-        "y": 425
+        "x": 2270,
+        "y": 865
       }
     },
     {
       "type": "outputNode",
       "content": {
-        "schema": "{\n  \"status\": finalDecision.enrollmentStatus,\n  \"summary\": finalDecision.summary\n}"
+        "schema": "{\n  \"status\": \"{{finalDecision.enrollmentStatus}}\"\n}"
       },
       "id": "73db829b-2564-4c81-8429-6cc7cd11df17",
       "name": "response",
       "position": {
-        "x": 4095,
-        "y": 415
+        "x": 2975,
+        "y": 800
       }
     }
   ],
@@ -316,30 +316,6 @@
       "targetId": "35d0ea21-0de3-4838-94f1-55aa152dabda"
     },
     {
-      "id": "f9a8426c-2ad2-4f57-88a4-06d02d235764",
-      "sourceId": "35d0ea21-0de3-4838-94f1-55aa152dabda",
-      "type": "edge",
-      "targetId": "cdde0421-d3e7-4a78-b2c3-62a9ebe16b97"
-    },
-    {
-      "id": "ada81283-1006-4589-a478-00152e7c7502",
-      "sourceId": "cdde0421-d3e7-4a78-b2c3-62a9ebe16b97",
-      "type": "edge",
-      "targetId": "d96083c0-32cb-4d62-8514-5eaeb4b20e59"
-    },
-    {
-      "id": "d583afbd-b141-4d5d-b868-bdbb1a1c6191",
-      "sourceId": "d96083c0-32cb-4d62-8514-5eaeb4b20e59",
-      "type": "edge",
-      "targetId": "e37b48f5-8e64-4e3e-89de-fa606ef2590b"
-    },
-    {
-      "id": "e46c3db6-1d6a-4a38-ac84-f74896ca8444",
-      "sourceId": "e37b48f5-8e64-4e3e-89de-fa606ef2590b",
-      "type": "edge",
-      "targetId": "49dbaaad-630a-47ee-80d5-4c948c7df456"
-    },
-    {
       "id": "d6d26921-81c8-45f7-b59c-b05c41ec1cca",
       "sourceId": "49dbaaad-630a-47ee-80d5-4c948c7df456",
       "type": "edge",
@@ -350,6 +326,54 @@
       "sourceId": "89ac9e49-15da-4c42-b2cc-d0ab469e0b6f",
       "type": "edge",
       "targetId": "73db829b-2564-4c81-8429-6cc7cd11df17"
+    },
+    {
+      "id": "9eb3e547-943d-43b3-9d3f-6fe60b2f1ae5",
+      "sourceId": "78307983-084c-40fb-8bde-8f5dc2f414fd",
+      "type": "edge",
+      "targetId": "cdde0421-d3e7-4a78-b2c3-62a9ebe16b97"
+    },
+    {
+      "id": "59593a7a-14bc-4991-9fb1-ceb0f99ba636",
+      "sourceId": "78307983-084c-40fb-8bde-8f5dc2f414fd",
+      "type": "edge",
+      "targetId": "d96083c0-32cb-4d62-8514-5eaeb4b20e59"
+    },
+    {
+      "id": "acee3bf3-2992-4fcd-b24c-ae4b00e35180",
+      "sourceId": "78307983-084c-40fb-8bde-8f5dc2f414fd",
+      "type": "edge",
+      "targetId": "e37b48f5-8e64-4e3e-89de-fa606ef2590b"
+    },
+    {
+      "id": "3e3a3e5b-4af7-4cb7-8eb2-a613ecedbed1",
+      "sourceId": "78307983-084c-40fb-8bde-8f5dc2f414fd",
+      "type": "edge",
+      "targetId": "49dbaaad-630a-47ee-80d5-4c948c7df456"
+    },
+    {
+      "id": "dbd68f88-7d14-43cd-9fd5-87930e8d7bd5",
+      "sourceId": "35d0ea21-0de3-4838-94f1-55aa152dabda",
+      "type": "edge",
+      "targetId": "89ac9e49-15da-4c42-b2cc-d0ab469e0b6f"
+    },
+    {
+      "id": "06354374-b02e-4230-8712-8e7923506b1e",
+      "sourceId": "cdde0421-d3e7-4a78-b2c3-62a9ebe16b97",
+      "type": "edge",
+      "targetId": "89ac9e49-15da-4c42-b2cc-d0ab469e0b6f"
+    },
+    {
+      "id": "718aeeec-e1cb-4fd6-892e-2a5e4857540f",
+      "sourceId": "d96083c0-32cb-4d62-8514-5eaeb4b20e59",
+      "type": "edge",
+      "targetId": "89ac9e49-15da-4c42-b2cc-d0ab469e0b6f"
+    },
+    {
+      "id": "5f832674-fa21-45f5-83e0-d394a3f5b92c",
+      "sourceId": "e37b48f5-8e64-4e3e-89de-fa606ef2590b",
+      "type": "edge",
+      "targetId": "89ac9e49-15da-4c42-b2cc-d0ab469e0b6f"
     }
   ]
 }
